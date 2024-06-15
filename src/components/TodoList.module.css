@@ -1,0 +1,22 @@
+.summary{
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	margin-top: 4rem;
+	margin-bottom: 1.5rem;
+}
+
+.createdTasks{
+	color: var(--blue);
+}
+
+.finishedTasks{
+	color: var(--purple);
+}
+
+.summary span{
+	color: var(--gray-200);
+	background-color: var(--gray-400);
+	padding: 5px 11px;
+	border-radius: 1rem;
+}
