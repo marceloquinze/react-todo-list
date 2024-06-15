@@ -1,3 +1,4 @@
+import { EmptyList } from './EmptyList'
 import { Task } from './Task'
 import styles from './TodoList.module.css'
 import { v4 as uuidv4 } from 'uuid'
@@ -9,21 +10,21 @@ interface Todo{
 }
 
 const todos: Todo[] = [
-	{
-		id: uuidv4(),
-		isFinished: false,
-		taskDescription: 'Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
-	},
-	{
-		id: uuidv4(),
-		isFinished: false,
-		taskDescription: 'Task 2 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
-	},
-	{
-		id: uuidv4(),
-		isFinished: true,
-		taskDescription: 'Task 3 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
-	}
+	// {
+	// 	id: uuidv4(),
+	// 	isFinished: false,
+	// 	taskDescription: 'Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
+	// },
+	// {
+	// 	id: uuidv4(),
+	// 	isFinished: false,
+	// 	taskDescription: 'Task 2 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
+	// },
+	// {
+	// 	id: uuidv4(),
+	// 	isFinished: true,
+	// 	taskDescription: 'Task 3 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
+	// }
 ]
 
 // Getting number of items in the todo list
@@ -41,18 +42,24 @@ export function TodoList(){
 				Created tasks <span>{numTasks}</span>
 				</div>
 				<div className={styles.finishedTasks}>
-				Finished <span>{`${numFinishedTasks(todos)} of ${numTasks}`}</span>
+				Finished
+					<span>
+						{ numTasks === 0 ? `0` : `${numFinishedTasks(todos)} of ${numTasks}` }
+					</span>
 				</div>
 			</div>
-			{ todos.map( todo =>{
-				return(
-					<Task
-						key={todo.id}
-						finished={todo.isFinished}
-						taskDescription={todo.taskDescription}
-					/>
-				)
-			})}
+			{
+				numTasks === 0 ? <EmptyList /> :
+				todos.map( todo =>{
+					return(
+						<Task
+							key={todo.id}
+							finished={todo.isFinished}
+							taskDescription={todo.taskDescription}
+						/>
+					)
+				})
+			}
 
 		</div>
 	)
