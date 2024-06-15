@@ -11,9 +11,10 @@ function App() {
       <Header />
 
       <div className={styles.wrapper}>
-        <AddTaskForm />
-
-        <TodoList />
+        <main>
+          <AddTaskForm />
+          <TodoList />
+        </main>
       </div>
     </div>
   )

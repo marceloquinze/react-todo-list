@@ -1,24 +1,25 @@
-import { CheckCircle, Circle, Trash } from 'phosphor-react'
+import { Check, Circle, Trash } from '@phosphor-icons/react'
 import styles from './Task.module.css'
 
 interface TaskProps{
-	finished?: boolean
+	finished?: boolean,
+	taskDescription: string
 }
 
-export function Task({finished = false}: TaskProps){
+export function Task({finished = false, taskDescription}: TaskProps){
 	return(
 		<div className={styles.task} >
 			{finished ? (
 				<button className={styles.checkboxMarked}>
-					<CheckCircle size={20} />
+					<Check size={12} />
 				</button>
 			) : (
 				<button className={styles.checkbox}>
-					<Circle size={20} />
+					<Circle size={12} />
 				</button>
 			)}
 			<div className={styles.todoDescription}>
-				<p className={finished ? styles.done : styles.todo}>Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.</p>
+				<p className={finished ? styles.done : styles.todo}>{taskDescription}</p>
 			</div>
 			<button className={styles.deleteTodo}>
 				<Trash size={20} />
