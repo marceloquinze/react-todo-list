@@ -72,9 +72,14 @@ export function TodoList(){
 	}
 
 	function toggleState(taskIdtoToggle: number){
-
+		const updatedTasks = tasks.map( item => {
+			if( item.id === taskIdtoToggle ){
+				return { ...item, isFinished: !item.isFinished}
+			}
+			return item
+		})
+		setTasks(updatedTasks)
 	}
-
 
 	// Getting number of items in the todo list
 	const numTasks = tasks.length;
@@ -114,6 +119,7 @@ export function TodoList(){
 								finished={item.isFinished}
 								taskDescription={item.taskDescription}
 								onDeleteTask={deleteTask}
+								onToggleState={toggleState}
 							/>
 						)
 					})

@@ -28,19 +28,15 @@ export function Task({
 
 	return(
 		<div className={styles.task} >
-			{/* {finished ? (
-				<button className={styles.checkboxMarked}>
-					<Check size={12} />
-				</button>
-			) : (
-				<button className={styles.checkbox}>
-					<Circle size={12} />
-				</button>
-			)} */}
 			<button
 				onClick={handleToggleState}
+				className={finished ? styles.checkboxMarked : styles.checkbox}
 			>
-				<Circle size={12} />
+				{ finished ? (
+					<Check size={12} />
+				) : (
+					<Circle size={12} />
+				)}
 			</button>
 			<div className={styles.todoDescription}>
 				<p className={finished ? styles.done : styles.todo}>{taskDescription}</p>
