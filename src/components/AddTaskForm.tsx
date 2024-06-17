@@ -5,8 +5,8 @@ import { FormEvent, ChangeEvent, InvalidEvent } from 'react'
 interface AddTaskForm{
 	newTaskText: string;
 	onCreateNewTask: (e: FormEvent) => void;
-	onNewTaskChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-	onNewTaskInvalid: (e: InvalidEvent<HTMLTextAreaElement>) => void
+	onNewTaskChange: (e: ChangeEvent<HTMLInputElement>) => void;
+	onNewTaskInvalid: (e: InvalidEvent<HTMLInputElement>) => void
 }
 
 export function AddTaskForm({

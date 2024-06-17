@@ -2,12 +2,12 @@ import { Check, Circle, Trash } from '@phosphor-icons/react'
 import styles from './Task.module.css'
 
 interface TaskProps{
-	id: number;
+	id: string;
 	finished?: boolean;
 	taskDescription: string;
 	createdAt: Date;
-	onDeleteTask: (taskIdtoDelete: number) => void;
-	onToggleState: (taskIdtoToggle: number) => void
+	onDeleteTask: (taskIdtoDelete: string) => void;
+	onToggleState: (taskIdtoToggle: string) => void
 }
 
 export function Task({

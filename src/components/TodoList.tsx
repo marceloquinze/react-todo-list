@@ -7,7 +7,7 @@ import { ChangeEvent, FormEvent, InvalidEvent, useEffect, useState } from 'react
 import { AddTaskForm } from './AddTaskForm'
 
 interface Todo{
-	id: number;
+	id: string;
 	isFinished: boolean;
 	taskDescription: string;
 	createdAt: Date;
@@ -72,18 +72,18 @@ export function TodoList(){
 
 	// 2. What happens with the input text content? (source: onChange)
 	// Acts while the user is inputting some value
-	function handleNewTaskChange(e: ChangeEvent<HTMLTextAreaElement>){
+	function handleNewTaskChange(e: ChangeEvent<HTMLInputElement>){
 		e.target.setCustomValidity("")
 		setNewTaskText(e.target.value)
 	}
 
 	// 3. What happens when the input is empty?
-	function handleNewTaskInvalid(e: InvalidEvent<HTMLTextAreaElement>){
+	function handleNewTaskInvalid(e: InvalidEvent<HTMLInputElement>){
 		e.target.setCustomValidity("This field is required")
 	}
 
 	// 4. What happens when we click on the trash icon?
-	function deleteTask(taskIdtoDelete: number){
+	function deleteTask(taskIdtoDelete: string){
 		const listWithoutDeletedTash = tasks.filter( item => {
 			return item.id !== taskIdtoDelete
 		})
@@ -91,7 +91,7 @@ export function TodoList(){
 	}
 
 	// 5. What happens when we click on the toggle button?
-	function toggleState(taskIdtoToggle: number){
+	function toggleState(taskIdtoToggle: string){
 		const updatedTasks = tasks.map( item => {
 			if( item.id === taskIdtoToggle ){
 				return { ...item, isFinished: !item.isFinished}
