@@ -1,10 +1,10 @@
 import { EmptyList } from './EmptyList'
 //import { AddTaskForm } from './AddTaskForm'
-import { PlusCircle } from '@phosphor-icons/react'
 import { Task } from './Task'
 import styles from './TodoList.module.css'
 import { v4 as uuidv4 } from 'uuid'
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
+import { AddTaskForm } from './AddTaskForm'
 
 interface Todo{
 	id: number,
@@ -63,6 +63,19 @@ export function TodoList(){
 		e.target.setCustomValidity("This field is required")
 	}
 
+	// 4. What happens when we click on the trash icon?
+	function deleteTask(taskIdtoDelete: number){
+		const listWithoutDeletedTash = tasks.filter( item => {
+			return item.id !== taskIdtoDelete
+		})
+		setTasks(listWithoutDeletedTash)
+	}
+
+	function toggleState(taskIdtoToggle: number){
+
+	}
+
+
 	// Getting number of items in the todo list
 	const numTasks = tasks.length;
 
@@ -71,45 +84,42 @@ export function TodoList(){
 
 	return(
 		<>
-		<form onSubmit={handleCreateNewTask} className={styles.form}>
-			<input
-			type="text"
-			value={newTaskText}
-			placeholder='Add a new task'
-			onChange={handleNewTaskChange}
-			required
-			onInvalid={handleNewTaskInvalid}
-			 />
-			<button type="submit">Create <PlusCircle size={24} /></button>
-		</form>
-		<div className={styles.todoList}>
+			<AddTaskForm
+				// Pass values from this TodoList component to AddTaskForm using functions
+				newTaskText={newTaskText}
+				onCreateNewTask={handleCreateNewTask}
+				onNewTaskChange={handleNewTaskChange}
+				onNewTaskInvalid={handleNewTaskInvalid}
+			/>
+			<div className={styles.todoList}>
 
-			<div className={styles.summary}>
-				<div className={styles.createdTasks}>
-				Created tasks <span>{numTasks}</span>
+				<div className={styles.summary}>
+					<div className={styles.createdTasks}>
+					Created tasks <span>{numTasks}</span>
+					</div>
+					<div className={styles.finishedTasks}>
+					Finished
+						<span>
+							{ numTasks === 0 ? `0` : `${numFinishedTasks(tasks)} of ${numTasks}` }
+						</span>
+					</div>
 				</div>
-				<div className={styles.finishedTasks}>
-				Finished
-					<span>
-						{ numTasks === 0 ? `0` : `${numFinishedTasks(tasks)} of ${numTasks}` }
-					</span>
-				</div>
+				{
+					numTasks === 0 ? <EmptyList /> :
+					tasks.map( item =>{
+						return(
+							<Task
+								key={item.id}
+								id={item.id}
+								finished={item.isFinished}
+								taskDescription={item.taskDescription}
+								onDeleteTask={deleteTask}
+							/>
+						)
+					})
+				}
+
 			</div>
-			{
-				numTasks === 0 ? <EmptyList /> :
-				tasks.map( item =>{
-					return(
-						<Task
-							key={item.id}
-							finished={item.isFinished}
-							taskDescription={item.taskDescription}
-						/>
-					)
-				})
-			}
-
-		</div>
 		</>
-
 	)
 }

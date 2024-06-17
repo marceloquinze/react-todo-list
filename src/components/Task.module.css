@@ -24,6 +24,7 @@
 	height: 1.125rem;
 	width: 1.125rem;
 	fill: transparent;
+	cursor: pointer;
 }
 
 .task .checkbox svg:hover{
@@ -39,6 +40,7 @@
     border-radius: 50%;
 	height: 1.125rem;
 	width: 1.125rem;
+	cursor: pointer;
 }
 
 .task .checkboxMarked svg:hover{
@@ -51,6 +53,7 @@
 
 .task .deleteTodo{
 	color: var(--gray-300);
+	cursor: pointer;
 }
 
 .task .deleteTodo:hover{
