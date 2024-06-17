@@ -57,6 +57,12 @@
 	color: var(--danger);
 }
 
+.todoDescription{
+	display: block;
+	text-align: left;
+	width: 100%;
+}
+
 .todoDescription .done{
 	text-decoration: line-through;
 	color: var(--gray-300);
