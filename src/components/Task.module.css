@@ -60,13 +60,18 @@
 	color: var(--danger);
 }
 
-.todoDescription{
+.task .todoDescription{
 	display: block;
 	text-align: left;
 	width: 100%;
 }
 
-.todoDescription .done{
+.task .done{
 	text-decoration: line-through;
 	color: var(--gray-300);
+}
+
+.task .date p{
+	font-size: 0.75rem;
+	text-align: right;
 }

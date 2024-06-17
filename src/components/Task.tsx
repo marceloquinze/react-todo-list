@@ -2,10 +2,11 @@ import { Check, Circle, Trash } from '@phosphor-icons/react'
 import styles from './Task.module.css'
 
 interface TaskProps{
-	id: number,
-	finished?: boolean,
-	taskDescription: string,
-	onDeleteTask: (taskIdtoDelete: number) => void,
+	id: number;
+	finished?: boolean;
+	taskDescription: string;
+	createdAt: Date;
+	onDeleteTask: (taskIdtoDelete: number) => void;
 	onToggleState: (taskIdtoToggle: number) => void
 }
 
@@ -13,6 +14,7 @@ export function Task({
 	id,
 	finished = false,
 	taskDescription,
+	createdAt,
 	onDeleteTask,
 	onToggleState
 }: TaskProps){
@@ -40,6 +42,9 @@ export function Task({
 			</button>
 			<div className={styles.todoDescription}>
 				<p className={finished ? styles.done : styles.todo}>{taskDescription}</p>
+			</div>
+			<div className={styles.date}>
+				<p className={finished ? styles.done : styles.todo}>{`${createdAt.toLocaleDateString()} at ${createdAt.toLocaleTimeString()}`}</p>
 			</div>
 			<button
 				onClick={handleDeleteTask}

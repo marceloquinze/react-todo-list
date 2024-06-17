@@ -3,7 +3,7 @@ import { EmptyList } from './EmptyList'
 import { Task } from './Task'
 import styles from './TodoList.module.css'
 import { v4 as uuidv4 } from 'uuid'
-import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, InvalidEvent, useEffect, useState } from 'react'
 import { AddTaskForm } from './AddTaskForm'
 
 interface Todo{
@@ -12,6 +12,8 @@ interface Todo{
 	taskDescription: string;
 	createdAt: Date;
 }
+
+// Keeping the code below only as a reference for study material
 
 // const initialTodos: Todo[] = [
 // 	{
@@ -33,13 +35,28 @@ interface Todo{
 
 export function TodoList(){
 
-	// States
-	// 1. General Task State
-	const [tasks, setTasks] = useState<Todo[]>([]);
+	// ------------- States
+	// 1. General Task State. The initial value comes from the localStorage
+    const [tasks, setTasks] = useState<Todo[]>(() => {
+        const saved = localStorage.getItem("tasks");
+        if (saved) {
+            const parsedTasks = JSON.parse(saved, (key, value) =>
+				// Convert the date back to a date string
+                key === 'createdAt' ? new Date(value) : value
+            );
+            return parsedTasks;
+        }
+        return [];
+    });
 	// 2. State that stores the input text content temporarily
 	const [newTaskText, setNewTaskText] = useState('')
 
-	// Handles
+	// 3. Using useEffect to keep items on localStorage
+	useEffect(() => {
+		localStorage.setItem("tasks", JSON.stringify(tasks));
+	}, [tasks]);
+
+	// ------------- Handles
 	// 1. What happens when we click the create button? (source: onSubmit)
 	function handleCreateNewTask(e: FormEvent){
 		e.preventDefault()
@@ -125,6 +142,7 @@ export function TodoList(){
 								key={item.id}
 								id={item.id}
 								finished={item.isFinished}
+								createdAt={item.createdAt}
 								taskDescription={item.taskDescription}
 								onDeleteTask={deleteTask}
 								onToggleState={toggleState}
