@@ -7,34 +7,35 @@ import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react'
 import { AddTaskForm } from './AddTaskForm'
 
 interface Todo{
-	id: number,
-	isFinished: boolean,
-	taskDescription: string
+	id: number;
+	isFinished: boolean;
+	taskDescription: string;
+	createdAt: Date;
 }
 
-const initialTodos: Todo[] = [
-	{
-		id: uuidv4(),
-		isFinished: false,
-		taskDescription: 'Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
-	},
-	{
-		id: uuidv4(),
-		isFinished: false,
-		taskDescription: 'Task 2 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
-	},
-	{
-		id: uuidv4(),
-		isFinished: true,
-		taskDescription: 'Task 3 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
-	}
-]
+// const initialTodos: Todo[] = [
+// 	{
+// 		id: uuidv4(),
+// 		isFinished: false,
+// 		taskDescription: 'Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
+// 	},
+// 	{
+// 		id: uuidv4(),
+// 		isFinished: false,
+// 		taskDescription: 'Task 2 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
+// 	},
+// 	{
+// 		id: uuidv4(),
+// 		isFinished: true,
+// 		taskDescription: 'Task 3 Integer ur na interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
+// 	}
+// ]
 
 export function TodoList(){
 
 	// States
 	// 1. General Task State
-	const [tasks, setTasks] = useState<Todo[]>(initialTodos);
+	const [tasks, setTasks] = useState<Todo[]>([]);
 	// 2. State that stores the input text content temporarily
 	const [newTaskText, setNewTaskText] = useState('')
 
@@ -45,7 +46,8 @@ export function TodoList(){
 		const newTask: Todo = {
 			id: uuidv4(),
 			isFinished: false,
-			taskDescription: newTaskText
+			taskDescription: newTaskText,
+			createdAt: new Date()
 		};
 		setTasks([...tasks, newTask])
 		setNewTaskText('')
@@ -71,6 +73,7 @@ export function TodoList(){
 		setTasks(listWithoutDeletedTash)
 	}
 
+	// 5. What happens when we click on the toggle button?
 	function toggleState(taskIdtoToggle: number){
 		const updatedTasks = tasks.map( item => {
 			if( item.id === taskIdtoToggle ){
@@ -81,11 +84,16 @@ export function TodoList(){
 		setTasks(updatedTasks)
 	}
 
+	// ------------- OTHER ACCESSORY FUNCTIONS AND VARS
+
 	// Getting number of items in the todo list
 	const numTasks = tasks.length;
 
 	// Getting number of complete items in the todo list
 	const numFinishedTasks = (tasks: Todo[]): number => tasks.filter(item => item.isFinished).length;
+
+	// Order tasks by creation date
+	const sortedTasks = tasks.sort((a,b) => b.createdAt.getTime() - a.createdAt.getTime())
 
 	return(
 		<>
@@ -111,7 +119,7 @@ export function TodoList(){
 				</div>
 				{
 					numTasks === 0 ? <EmptyList /> :
-					tasks.map( item =>{
+					sortedTasks.map( item =>{
 						return(
 							<Task
 								key={item.id}
